@@ -1,17 +1,54 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>G-calender</ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <ion-content padding class="getting-started">
+    <ion-list>
+      <ion-item-group>
+        <ion-item-divider dark>Add Event Details</ion-item-divider>
+        <ion-item>
+          <ion-label>Name</ion-label>
+          <ion-input type="text" [(ngModel)]="calendarEvent.name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Location</ion-label>
+          <ion-input type="text" [(ngModel)]="calendarEvent.location"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Description</ion-label>
+          <ion-input type="text" [(ngModel)]="calendarEvent.description"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Start Date</ion-label>
+          <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="calendarEvent.startDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>Start Time</ion-label>
+          <ion-datetime displayFormat="hh:mm:a" pickerFormat="hh:mm:a" [(ngModel)]="calendarEvent.startTime"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>End Date</ion-label>
+          <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD MMM YYYY" [(ngModel)]="calendarEvent.endDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label>End Time</ion-label>
+          <ion-datetime displayFormat="hh:mm:a" pickerFormat="hh:mm:a" [(ngModel)]="calendarEvent.endTime"></ion-datetime>
+        </ion-item>
+        <ion-item-group>
+          <ion-item-divider light>Attendees</ion-item-divider>
+          <ion-list>
+            <ion-item *ngFor="let attendee of attendees;let i = index" inset>
+              <ion-label>Attendee {{attendees.length - i}}</ion-label>
+              <ion-input [(ngModel)]="attendee.email"></ion-input>
+              <ion-icon name="md-remove-circle" item-right class="addRemoveBtn" (click)="removeAttendees(i)" *ngIf="attendees.length - i < attendees.length"></ion-icon>
+              <ion-icon name="md-add-circle" item-right class="addRemoveBtn" (click)="addAttendees()" *ngIf="attendees.length - i  == attendees.length"></ion-icon>
+            </ion-item>
+          </ion-list>
+        </ion-item-group>
+
+      </ion-item-group>
+    </ion-list>
+    <button ion-button (click)="sendInvite()">add to Google Calendar</button>
 </ion-content>
